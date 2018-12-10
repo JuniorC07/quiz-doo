@@ -60,7 +60,7 @@ public class TelaDisciplinaProfessor extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Desc", "Periodo"
+                "Descrição", "Período"
             }
         ));
         jScrollPane1.setViewportView(tblDisciplina);
