@@ -145,6 +145,7 @@ public class TelaAluno extends javax.swing.JFrame {
         try {
             questoes = d.buscarQuestoesRespondidasAluno(d.getDisciplina("1"), this.aluno);
             questoes = d.buscarQuestoesPendentesAluno(questoes, aluno, d.getDisciplina("1"));
+
             TelaQuestoesPendentes tlp = new TelaQuestoesPendentes();
             tlp.preenchertable(questoes);
         } catch (SQLException ex) {

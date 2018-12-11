@@ -5,12 +5,10 @@
  */
 package view;
 
-import controller.DAOAlternativa;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
-import model.Alternativa;
 import model.Questao;
 
 /**

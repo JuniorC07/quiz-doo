@@ -104,7 +104,7 @@ public class DAODisciplina {
         String sql = "SELECT * FROM dbquiz.questao where id_disciplina = " + d.getId() + " and id != ";
         Iterator<Questao> percorre = questoes.iterator();
         int aux = 0;
-        Questao q = new Questao();
+
         while (percorre.hasNext()) {
             Questao tmp = percorre.next();
             if (aux == 0) {
@@ -118,6 +118,7 @@ public class DAODisciplina {
         retorno = consulta.executeQuery(sql);
 
         while (retorno.next()) {
+            Questao q = new Questao();
             q.setDesc(retorno.getString("desc"));
             q.setId(retorno.getString("id"));
             sql = "SELECT * FROM dbquiz.alternativa where id_questao = " + q.getId() + ";";
@@ -137,6 +138,7 @@ public class DAODisciplina {
                 }
                 q.alternativas.add(alt);
             }
+
             questoesPendentes.add(q);
         }
 
