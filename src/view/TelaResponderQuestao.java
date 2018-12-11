@@ -143,16 +143,14 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
             while (p.hasNext()) {
                 Alternativa tmp = p.next();
                 if (numb == Integer.parseInt(tmp.getId())) {
-                    TelaResponderQuestao tl = new TelaResponderQuestao();
                     DAODisciplina dd = new DAODisciplina();
                     try {
-                        System.out.println(this.aluno.getId() + "Chegou ");
                         dd.responderQuestao(this.aluno, q, tmp);
                         this.dispose();
+
                     } catch (SQLException ex) {
                         Logger.getLogger(TelaResponderQuestao.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    this.dispose();
                     aux = true;
                     break;
                 }

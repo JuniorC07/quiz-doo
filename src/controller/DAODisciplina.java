@@ -302,7 +302,6 @@ public class DAODisciplina {
         }
 
         String sql = "INSERT INTO dbquiz.quizr VALUES(null," + q.getId() + "," + a.getId() + "," + al.getId() + "," + q.getId_disciplina() + ");";
-        System.out.println(sql);
         consulta.executeUpdate(sql);
 
         this.desconectar();

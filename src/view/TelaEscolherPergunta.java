@@ -158,6 +158,7 @@ public class TelaEscolherPergunta extends javax.swing.JFrame {
                 Questao tmp = p.next();
                 if (numb == Integer.parseInt(tmp.getId())) {
                     TelaResponderQuestao tl = new TelaResponderQuestao();
+                    this.dispose();
                     DAOAlternativa da = new DAOAlternativa();
                     try {
                         tmp.alternativas = da.getAlternativas(tmp.getId());
