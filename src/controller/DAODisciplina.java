@@ -121,6 +121,7 @@ public class DAODisciplina {
             Questao q = new Questao();
             q.setDesc(retorno.getString("desc"));
             q.setId(retorno.getString("id"));
+            q.setId_disciplina(retorno.getString("id_disciplina"));
             sql = "SELECT * FROM dbquiz.alternativa where id_questao = " + q.getId() + ";";
             ResultSet returnAlternativa;
             Statement consultaAlternativa = conectar.createStatement();
@@ -292,7 +293,7 @@ public class DAODisciplina {
         return alunos;
     }
 
-    public void responderQuestao(Disciplina d, Aluno a, Questao q, Alternativa al) throws SQLException {
+    public void responderQuestao(Aluno a, Questao q, Alternativa al) throws SQLException {
 
         try {
             this.conectar();
@@ -300,7 +301,8 @@ public class DAODisciplina {
             Logger.getLogger(DAODisciplina.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        String sql = "INSERT INTO dbquiz.quizr VALUES(null," + q.getId() + "," + a.getIdAluno() + "," + al.getId() + "," + d.getId() + ");";
+        String sql = "INSERT INTO dbquiz.quizr VALUES(null," + q.getId() + "," + a.getId() + "," + al.getId() + "," + q.getId_disciplina() + ");";
+        System.out.println(sql);
         consulta.executeUpdate(sql);
 
         this.desconectar();

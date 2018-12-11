@@ -130,6 +130,7 @@ public class TelaLogin extends javax.swing.JFrame {
             if (user.isProfessor()) {
                 TelaProfessor p = new TelaProfessor();
                 p.mainProfessor(user.getP());
+                System.out.println();
                 this.dispose();
             } else {
                 TelaAluno tl = new TelaAluno();

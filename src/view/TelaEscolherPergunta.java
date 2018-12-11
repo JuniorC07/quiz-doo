@@ -5,11 +5,15 @@
  */
 package view;
 
+import controller.DAOAlternativa;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Aluno;
 import model.Questao;
 
 /**
@@ -25,9 +29,11 @@ public class TelaEscolherPergunta extends javax.swing.JFrame {
         initComponents();
         this.setVisible(true);
     }
+    Aluno aluno;
     ArrayList<Questao> questoes = new ArrayList();
 
-    public void preenchertable(ArrayList<Questao> q) throws SQLException {
+    public void preenchertable(ArrayList<Questao> q, Aluno a) throws SQLException {
+        this.aluno = a;
         this.questoes = q;
         DefaultTableModel modelo = (DefaultTableModel) this.tblPerguntas.getModel();
         Iterator<Questao> perc = q.iterator();
@@ -151,7 +157,14 @@ public class TelaEscolherPergunta extends javax.swing.JFrame {
             while (p.hasNext()) {
                 Questao tmp = p.next();
                 if (numb == Integer.parseInt(tmp.getId())) {
-                    JOptionPane.showMessageDialog(null, "Voce vai responder a questao");
+                    TelaResponderQuestao tl = new TelaResponderQuestao();
+                    DAOAlternativa da = new DAOAlternativa();
+                    try {
+                        tmp.alternativas = da.getAlternativas(tmp.getId());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TelaEscolherPergunta.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    tl.preencherDados(tmp, this.aluno);
                     this.dispose();
                     aux = true;
                     break;

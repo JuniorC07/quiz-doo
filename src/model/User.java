@@ -14,6 +14,7 @@ public class User {
     private Professor p = new Professor(1, "1");
     private boolean existe;
     private boolean professor;
+    private String id;
     public User() {
     }
 
@@ -47,6 +48,14 @@ public class User {
 
     public void setProfessor(boolean professor) {
         this.professor = professor;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

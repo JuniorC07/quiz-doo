@@ -5,6 +5,18 @@
  */
 package view;
 
+import controller.DAOAlternativa;
+import controller.DAODisciplina;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Alternativa;
+import model.Aluno;
+import model.Questao;
+
 /**
  *
  * @author Avell
@@ -17,6 +29,23 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
     public TelaResponderQuestao() {
         initComponents();
         this.setVisible(true);
+    }
+    Questao q = new Questao();
+    Aluno aluno;
+
+    public void preencherDados(Questao q, Aluno a) {
+        this.aluno = a;
+        this.q = q;
+        this.txtQuestao.setText(q.getDesc());
+        DefaultTableModel modelo = (DefaultTableModel) this.tlbAlternativas.getModel();
+        Iterator<Alternativa> perc = q.alternativas.iterator();
+        while (perc.hasNext()) {
+            Alternativa tmp = perc.next();
+            modelo.addRow(new Object[]{
+                tmp.getId(),
+                tmp.getDesc()
+            });
+        }
     }
 
     /**
@@ -31,7 +60,7 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtQuestao = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tlbAlternativas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         btnResponder = new javax.swing.JButton();
@@ -41,7 +70,7 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Questão:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tlbAlternativas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -49,11 +78,16 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
                 "ID", "Alternativa"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tlbAlternativas);
 
         jLabel2.setText("Id:");
 
         btnResponder.setText("Responder");
+        btnResponder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResponderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,12 +126,49 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnResponderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResponderActionPerformed
+        boolean b = false;
+        int numb = 0;
+        try {
+            numb = Integer.parseInt(this.txtId.getText());
+            b = true;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite um numero");
+            this.txtId.setText("");
+        }
+
+        if (b) {
+            boolean aux = false;
+            Iterator<Alternativa> p = this.q.alternativas.iterator();
+            while (p.hasNext()) {
+                Alternativa tmp = p.next();
+                if (numb == Integer.parseInt(tmp.getId())) {
+                    TelaResponderQuestao tl = new TelaResponderQuestao();
+                    DAODisciplina dd = new DAODisciplina();
+                    try {
+                        System.out.println(this.aluno.getId() + "Chegou ");
+                        dd.responderQuestao(this.aluno, q, tmp);
+                        this.dispose();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TelaResponderQuestao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    this.dispose();
+                    aux = true;
+                    break;
+                }
+            }
+            if (aux == false) {
+                JOptionPane.showMessageDialog(null, "Digite um Id Válido");
+            }
+        }
+    }//GEN-LAST:event_btnResponderActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnResponder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tlbAlternativas;
     private javax.swing.JTextField txtId;
     private javax.swing.JLabel txtQuestao;
     // End of variables declaration//GEN-END:variables

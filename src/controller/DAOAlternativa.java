@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Alternativa;
@@ -66,5 +67,33 @@ public class DAOAlternativa {
         }
         this.desconectar();
         return a;
+    }
+
+    public ArrayList<Alternativa> getAlternativas(String idq) throws SQLException {
+        ArrayList<Alternativa> alternativas = new ArrayList();
+        try {
+            this.conectar();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DAOPessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        int aux = 0;
+        String sql = "SELECT * FROM dbquiz.alternativa where id_questao = " + idq + ";";
+        retorno = consulta.executeQuery(sql);
+
+        while (retorno.next()) {
+            Alternativa a = new Alternativa();
+            a.setId(retorno.getString("id"));
+            a.setDesc(retorno.getString("desc"));
+            aux = retorno.getInt("correta");
+            if (aux == 1) {
+                a.setCorreta(true);
+            } else {
+                a.setCorreta(false);
+            }
+            alternativas.add(a);
+        }
+        this.desconectar();
+        return alternativas;
     }
 }
