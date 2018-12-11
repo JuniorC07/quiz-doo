@@ -58,7 +58,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnDisciplina" alignment="0" min="-2" pref="348" max="-2" attributes="0"/>
                                   <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jButton3" max="32767" attributes="0"/>
+                                      <Component id="btnRegistrar" max="32767" attributes="0"/>
                                       <Component id="btnRespostasAlunos" alignment="1" max="32767" attributes="0"/>
                                       <Component id="btnDisciplinaAtual" alignment="1" min="-2" pref="348" max="-2" attributes="0"/>
                                   </Group>
@@ -80,7 +80,7 @@
                   <EmptySpace pref="51" max="32767" attributes="0"/>
                   <Component id="btnDisciplina" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRegistrar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnRespostasAlunos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -113,7 +113,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRespostasAlunosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="btnRegistrar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -121,7 +121,7 @@
             <Property name="text" type="java.lang.String" value="2 - Registrar questao         "/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnDisciplinaAtual">

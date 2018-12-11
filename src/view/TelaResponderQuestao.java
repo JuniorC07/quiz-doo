@@ -36,7 +36,7 @@ public class TelaResponderQuestao extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         btnResponder = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Questão:");

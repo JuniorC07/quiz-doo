@@ -58,13 +58,12 @@ public class DAODisciplina {
                 int id = 0;
                 boolean insert = false;
                 String sqlInsert = "INSERT INTO dbquiz.questao VALUES(null,'" + q.getDesc() + "'," + d.getId() + ");";
-                String sql = "select max(id) from dbquiz.disciplina;";
+                String sql = "select max(id) from dbquiz.questao;";
                 Iterator<Alternativa> percorre = q.alternativas.iterator();
 
                 try {
                     consulta.executeUpdate(sqlInsert);
                     insert = true;
-                    System.out.println("Registrada com Sucesso");
                 } catch (SQLException ex) {
                     insert = false;
                     System.out.println("Oops, nao foi possível registrar, verifique os dados");
@@ -76,7 +75,15 @@ public class DAODisciplina {
                     }
                     while (percorre.hasNext()) {
                         Alternativa tmp = percorre.next();
-                        sqlInsert = "INSERT INTO dbquiz.alternativa VALUES(null," + id + "," + tmp.getDesc() + "," + tmp.getCorreta() + ");";
+                        Statement consultaAlt = conectar.createStatement();
+                        int c = 0;
+                        if (tmp.getCorreta()) {
+                            c = 1;
+                        } else {
+                            c = 0;
+                        }
+                        sqlInsert = "INSERT INTO dbquiz.alternativa VALUES(null," + id + ",'" + tmp.getDesc() + "'," + c + ");";
+                        consultaAlt.executeUpdate(sqlInsert);
                     }
                 }
             } else {

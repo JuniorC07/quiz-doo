@@ -48,7 +48,7 @@ public class TelaProfessor extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnDisciplina = new javax.swing.JButton();
         btnRespostasAlunos = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         btnDisciplinaAtual = new javax.swing.JButton();
         lblProfessor = new javax.swing.JLabel();
         btnSair = new javax.swing.JButton();
@@ -71,11 +71,11 @@ public class TelaProfessor extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("2 - Registrar questao         ");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRegistrar.setText("2 - Registrar questao         ");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
@@ -114,7 +114,7 @@ public class TelaProfessor extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnRespostasAlunos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnDisciplinaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -129,7 +129,7 @@ public class TelaProfessor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(btnDisciplina)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnRegistrar)
                 .addGap(18, 18, 18)
                 .addComponent(btnRespostasAlunos)
                 .addGap(18, 18, 18)
@@ -173,9 +173,15 @@ public class TelaProfessor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRespostasAlunosActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        DAODisciplina d = new DAODisciplina();
+        TelaFazerQuestao tl = new TelaFazerQuestao();
+        try {
+            tl.pegarDados(d.getDisciplina("1"));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProfessor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnDisciplinaAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinaAtualActionPerformed
         DAODisciplina d = new DAODisciplina();
@@ -195,11 +201,11 @@ public class TelaProfessor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDisciplina;
     private javax.swing.JButton btnDisciplinaAtual;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRespostasAlunos;
     private javax.swing.JButton btnSair;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblProfessor;
     // End of variables declaration//GEN-END:variables

@@ -5,11 +5,25 @@
  */
 package view;
 
+import controller.DAODisciplina;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Alternativa;
+import model.Disciplina;
+import model.Questao;
+
 /**
  *
  * @author Avell
  */
 public class TelaFazerQuestao extends javax.swing.JFrame {
+
+    private Questao q = new Questao();
+    private Disciplina d = new Disciplina();
+    private int cont = 0;
 
     /**
      * Creates new form TelaFazerQuestao
@@ -17,6 +31,10 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
     public TelaFazerQuestao() {
         initComponents();
         this.setVisible(true);
+    }
+
+    public void pegarDados(Disciplina d) {
+        this.d = d;
     }
 
     /**
@@ -33,12 +51,14 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
         txtQuestao = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDesc = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         txtDesc = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        cCorreta = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Questao:");
@@ -50,15 +70,15 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Alternativas:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDesc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                " Descrição"
+                " Descrição", "Correta"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblDesc);
 
         jLabel3.setText("Descrição:");
 
@@ -68,10 +88,24 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("+");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("+");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        cCorreta.setText("Correta");
+        cCorreta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cCorretaActionPerformed(evt);
             }
         });
 
@@ -81,16 +115,20 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtDesc)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSalvar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)
+                        .addComponent(jScrollPane1)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(txtDesc)
+                            .addGap(18, 18, 18)
+                            .addComponent(cCorreta)
+                            .addGap(34, 34, 34)
+                            .addComponent(btnAdd))))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,10 +145,13 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnAdd)
+                    .addComponent(cCorreta))
                 .addGap(19, 19, 19)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(btnSalvar)
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -120,18 +161,73 @@ public class TelaFazerQuestao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) this.tblDesc.getModel();
+        if (this.cCorreta.isSelected() == false) {
+
+            Alternativa a = new Alternativa(null, this.txtDesc.getText(), this.cCorreta.isSelected());
+            this.q.alternativas.add(a);
+            modelo.addRow(new Object[]{
+                this.txtDesc.getText(),
+                this.cCorreta.isSelected()
+            });
+            this.txtDesc.setText("");
+            this.cCorreta.setSelected(false);
+        } else if (this.cCorreta.isSelected() && cont == 0) {
+            this.cont = 7;
+            Alternativa a = new Alternativa(null, this.txtDesc.getText(), this.cCorreta.isSelected());
+            this.q.alternativas.add(a);
+            modelo.addRow(new Object[]{
+                this.txtDesc.getText(),
+                this.cCorreta.isSelected()
+            });
+            this.txtDesc.setText("");
+            this.cCorreta.setSelected(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Apenas  uma alternativa deve ser correta");
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void cCorretaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCorretaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_cCorretaActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if (!"".equals(this.txtQuestao.getText())) {
+            if (this.cont != 0) {
+                if (this.q.alternativas.size() >= 2) {
+                    DAODisciplina dd = new DAODisciplina();
+                    try {
+                        this.q.setId_disciplina(this.d.getId());
+                        this.q.setDesc(txtQuestao.getText());
+                        System.out.println(d.getId());
+                        dd.registrarQuestao(this.d, this.q);
+                        this.dispose();
+                        JOptionPane.showMessageDialog(null, "Questao Registrada com Sucesso");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TelaFazerQuestao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Uma pergunta deve ter no minimo 2 alternativas");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "A questão precisa ter no minimo uma alternativa correta");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "A questao deve ter uma descrição");
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JCheckBox cCorreta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblDesc;
     private javax.swing.JTextField txtDesc;
     private javax.swing.JTextArea txtQuestao;
     // End of variables declaration//GEN-END:variables

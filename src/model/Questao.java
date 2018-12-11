@@ -17,7 +17,7 @@ public class Questao {
     private String desc;
     private Boolean acertou;
     private String id_resposta;
-    private int id_disciplina;
+    private String id_disciplina;
 
     public ArrayList<Alternativa> alternativas = new ArrayList();
 
@@ -52,11 +52,11 @@ public class Questao {
         this.acertou = acertou;
     }
 
-    public int getId_disciplina() {
+    public String getId_disciplina() {
         return id_disciplina;
     }
 
-    public void setId_disciplina(int id_disciplina) {
+    public void setId_disciplina(String id_disciplina) {
         this.id_disciplina = id_disciplina;
     }
 
