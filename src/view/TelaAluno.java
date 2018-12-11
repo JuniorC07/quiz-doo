@@ -43,7 +43,7 @@ public class TelaAluno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnResponder = new javax.swing.JButton();
         lblAluno = new javax.swing.JLabel();
         btnQuestoesPendentes = new javax.swing.JButton();
         btnQuestoesRespondidas = new javax.swing.JButton();
@@ -52,11 +52,11 @@ public class TelaAluno extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("3 - Responder questões Pendentes");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnResponder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnResponder.setText("3 - Responder questões Pendentes");
+        btnResponder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnResponderActionPerformed(evt);
             }
         });
 
@@ -110,7 +110,7 @@ public class TelaAluno extends javax.swing.JFrame {
                             .addComponent(btnQuestoesPendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(bntDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnResponder, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(88, 88, 88))))
         );
@@ -126,7 +126,7 @@ public class TelaAluno extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnQuestoesPendentes)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnResponder)
                 .addGap(18, 18, 18)
                 .addComponent(bntDisciplina)
                 .addGap(40, 40, 40))
@@ -135,9 +135,19 @@ public class TelaAluno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnResponderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResponderActionPerformed
+        DAODisciplina d = new DAODisciplina();
+        ArrayList<Questao> questoes = new ArrayList();
+        try {
+            questoes = d.buscarQuestoesRespondidasAluno(d.getDisciplina("1"), this.aluno);
+            questoes = d.buscarQuestoesPendentesAluno(questoes, aluno, d.getDisciplina("1"));
+
+            TelaEscolherPergunta tlp = new TelaEscolherPergunta();
+            tlp.preenchertable(questoes);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaAluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnResponderActionPerformed
 
     private void btnQuestoesPendentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuestoesPendentesActionPerformed
         DAODisciplina d = new DAODisciplina();
@@ -184,8 +194,8 @@ public class TelaAluno extends javax.swing.JFrame {
     private javax.swing.JButton bntDisciplina;
     private javax.swing.JButton btnQuestoesPendentes;
     private javax.swing.JButton btnQuestoesRespondidas;
+    private javax.swing.JButton btnResponder;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblAluno;
     // End of variables declaration//GEN-END:variables
 }

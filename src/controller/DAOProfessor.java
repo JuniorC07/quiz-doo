@@ -55,7 +55,6 @@ public class DAOProfessor {
 
         String sql = "SELECT * FROM dbquiz.professor where id = " + id + ";";
         retorno = consulta.executeQuery(sql);
-        Aluno a = new Aluno(1, "a");
         Professor pr = new Professor(1, "a");
         while (retorno.next()) {
             DAOPessoa p = new DAOPessoa();
