@@ -157,7 +157,6 @@ public class TelaEscolherPergunta extends javax.swing.JFrame {
                     break;
                 }
             }
-            System.out.println("Aqui");
             if (aux == false) {
                 JOptionPane.showMessageDialog(null, "Digite um Id Válido");
             }
