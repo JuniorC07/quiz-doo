@@ -8,8 +8,6 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +21,6 @@ public class Conexao {
         } catch (ClassNotFoundException e) {
             System.out.println("Erro ao carregar o driver: " + e.getMessage());
         }
-        return DriverManager.getConnection("jdbc:mysql://localhost/dbquiz?user=root&password=root&useTimezone=true&serverTimezone=UTC");
+        return DriverManager.getConnection("jdbc:mysql://localhost/dbquiz1?user=root&password=root&useTimezone=true&serverTimezone=UTC");
     }
 }

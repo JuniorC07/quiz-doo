@@ -100,21 +100,26 @@ public class DAODisciplina {
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(DAOPessoa.class.getName()).log(Level.SEVERE, null, ex);
         }
+        String sql = "";
         ArrayList<Questao> questoesPendentes = new ArrayList();
-        String sql = "SELECT * FROM dbquiz.questao where id_disciplina = " + d.getId() + " and id != ";
-        Iterator<Questao> percorre = questoes.iterator();
         int aux = 0;
-
-        while (percorre.hasNext()) {
-            Questao tmp = percorre.next();
-            if (aux == 0) {
-                sql += tmp.getId() + " ";
-            } else {
-                sql += "and id != " + tmp.getId() + " ";
+        if (questoes.size() >= 1) {
+            sql = "SELECT * FROM dbquiz.questao where id_disciplina = " + d.getId() + " and id != ";
+            Iterator<Questao> percorre = questoes.iterator();
+            while (percorre.hasNext()) {
+                Questao tmp = percorre.next();
+                if (aux == 0) {
+                    sql += tmp.getId() + " ";
+                } else {
+                    sql += "and id != " + tmp.getId() + " ";
+                }
+                aux = 5;
             }
-            aux = 5;
+            sql += ";";
+        } else {
+            sql = "SELECT * FROM dbquiz.questao where id_disciplina = " + d.getId() + ";";
         }
-        sql += ";";
+
         retorno = consulta.executeQuery(sql);
 
         while (retorno.next()) {
